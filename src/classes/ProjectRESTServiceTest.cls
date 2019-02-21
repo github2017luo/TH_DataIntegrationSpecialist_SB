@@ -34,7 +34,7 @@ private class ProjectRESTServiceTest {
         System.assertEquals('TestProject', project.Name);
         
         restStatus = ProjectRESTService.postProjectData('123456', 'TestProject', oppId, startDate,
-                                          endDate, amount, 'Billable');
+                                          endDate, amount, 'Billed');
         
         System.assertEquals('OK', restStatus);
         
@@ -43,7 +43,7 @@ private class ProjectRESTServiceTest {
         
         System.assert(projectUpd.size() == 1);
         System.assertEquals('TestProject', projectUpd[0].Name);
-        System.assertEquals('Billable', projectUpd[0].Status__c);
+        System.assertEquals('Billed', projectUpd[0].Status__c);
 
         Test.stopTest();
         

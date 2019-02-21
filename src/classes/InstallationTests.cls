@@ -36,7 +36,7 @@ private class InstallationTests {
     
     //Test empty service stub
 	static testmethod void testProjectCalloutServiceForInstall() {
-	    ProjectCalloutService.postOpportunityToPMS();
+	    //ProjectCalloutService.postOpportunityToPMS();
 	}
 
 }

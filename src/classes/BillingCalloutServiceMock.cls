@@ -1,3 +1,10 @@
-public class BillingCalloutServiceMock {
-   //Implement http mock callout here
+@isTest
+public class BillingCalloutServiceMock implements WebServiceMock {
+   public void doInvoke(Object stub, Object request, Map<String,Object> response, String enpoint, String soapAction,
+                        String requestName, String responseNS, String responseName, String responseType) {
+
+       BillingServiceProxy.billProjectResponse_element response_x = new BillingServiceProxy.billProjectResponse_element();
+       response_x.status = 'OK';
+       response.put('response_x', response_x);
+   }
 }

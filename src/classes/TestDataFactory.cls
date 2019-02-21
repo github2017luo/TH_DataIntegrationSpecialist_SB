@@ -24,4 +24,9 @@ public class TestDataFactory {
         return opp;
     }
 
+    public static void createBillingCredentials() {
+        ServiceCredentials__c credentials = new ServiceCredentials__c(Name = 'BillingServiceCredential', Username__c = 'testUsername', Password__c = 'testPassword');
+        insert credentials;
+    }
+
 }
