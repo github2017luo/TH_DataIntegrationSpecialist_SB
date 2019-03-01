@@ -3,8 +3,13 @@ public class TestDataFactory {
 
     public static ID createTestAccount() {
         Account acc = new Account(Name='TestAcc');
-        Database.SaveResult dbResultAcc = Database.insert(acc, false);
-        return dbResultAcc.getId();
+        try {
+            insert acc;
+            return acc.Id;
+        } catch (DmlException dmle) {
+            System.debug('Error during inserting test opportunity: ' + dmle.getMessage());
+        }
+        return null;
     }
 
     public static Opportunity createTestOpportunity(ID accountId, String stageName, Date closeDate, Integer amount) {
@@ -18,7 +23,7 @@ public class TestDataFactory {
         try{
             insert opp;
         } catch(DmlException dmle) {
-            System.debug('Error during inserting test opportunity: ' + dmle.getStackTraceString());
+            System.debug('Error during inserting test opportunity: ' + dmle.getMessage());
             return null;
         }
         return opp;
@@ -28,5 +33,4 @@ public class TestDataFactory {
         ServiceCredentials__c credentials = new ServiceCredentials__c(Name = 'BillingServiceCredential', Username__c = 'testUsername', Password__c = 'testPassword');
         insert credentials;
     }
-
 }

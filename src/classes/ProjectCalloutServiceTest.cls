@@ -1,6 +1,8 @@
 @isTest
 private class ProjectCalloutServiceTest {
-    
+
+    private static final String OPP_NAME = 'TestOpp';
+
     @testSetup static void setup() {
 
         String accId = TestDataFactory.createTestAccount();
@@ -15,14 +17,14 @@ private class ProjectCalloutServiceTest {
         
         Test.setMock(HttpCalloutMock.class, new ProjectCalloutServiceMock());
 
-        List<Opportunity> opps = [SELECT Id FROM Opportunity WHERE Name='TestOpp'];
+        List<Opportunity> opps = [SELECT Id FROM Opportunity WHERE Name = :OPP_NAME];
         List<ID> ids = new List<Id>(new Map<Id, Opportunity>(opps).keySet());
         
         Test.startTest();
         ProjectCalloutService.postOpportunityToPMS(ids);
         Test.stopTest();
 
-        for(Opportunity opp : [SELECT StageName FROM Opportunity WHERE Name='TestOpp']) {
+        for(Opportunity opp : [SELECT StageName FROM Opportunity WHERE Name = :OPP_NAME]) {
             System.assertEquals('Submitted Project', opp.StageName);
         } 
 	}
@@ -31,14 +33,14 @@ private class ProjectCalloutServiceTest {
         
         Test.setMock(HttpCalloutMock.class, new ProjectCalloutServiceMockFailure());
 
-        List<Opportunity> opps = [SELECT Id FROM Opportunity WHERE Name='TestOpp'];
+        List<Opportunity> opps = [SELECT Id FROM Opportunity WHERE Name = :OPP_NAME];
         List<ID> ids = new List<Id>(new Map<Id, Opportunity>(opps).keySet());
         
         Test.startTest();
         ProjectCalloutService.postOpportunityToPMS(ids);
         Test.stopTest();
 
-        for(Opportunity opp : [SELECT StageName FROM Opportunity WHERE Name='TestOpp']) {
+        for(Opportunity opp : [SELECT StageName FROM Opportunity WHERE Name = :OPP_NAME]) {
             System.assertEquals('Resubmit Project', opp.StageName);
         }
     }
